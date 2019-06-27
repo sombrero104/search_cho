@@ -1,19 +1,31 @@
 
 
 1. 영문일 경우 (It is not syllable.)
+
 	like '%a%'
+	
 	like '%and%'
+	
 
 2. 한글일 경우 
+
 	(2-1) 초성일 경우 (It is not syllable.)
+	
 		rlike '^ㄱ' or (NAME >= '가' and NAME < '나')
+		
 		rlike '^ㅌ' or (NAME >= '타' and NAME < '파')
+		
+		
 
 	(2-2) 음절일 경우 
+	
 		like '%가%'
+		
 		like '%각%'
+		
 
 	=================================================================================
+	
 	
 	// search cho
 	SearchWordUtil searchWordUtil = new SearchWordUtil();
