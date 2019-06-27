@@ -137,50 +137,95 @@
 	}
 
 	=================================================================================
+	
 
 	<input type="text" id="searchName" name="searchName" value="" class="form-control" style="width:230px;height:25px;padding:5px;" onkeyup="getGameInfoList()" />
+	
 
 	=================================================================================
 	
+	
 	<if test="(searchName != null) and (searchName != '')">
+	
 				<choose>
+				
 					<when test="isCho == true">
+					
 						<choose>
+						
 							<when test="choNextSyllable != null">
+							
 								AND NAME rlike concat('^', #{searchName}) or (NAME <![CDATA[>=]]> #{choSyllable} and NAME <![CDATA[<]]> #{choNextSyllable})
+								
 							</when>
+							
 							<otherwise>
+							
 								AND NAME rlike concat('^', #{searchName}) or (NAME <![CDATA[>=]]> #{choSyllable})
+								
 							</otherwise>
+							
 						</choose>
+						
 					</when>
+					
 					<otherwise>
+					
 						<choose>
+						
 							<when test="isOneWord == true">
+							
 								AND NAME like concat(#{searchName}, '%')
+								
 							</when>
+							
 							<otherwise>
+							
 								AND NAME like concat('%', #{searchName}, '%')
+								
 							</otherwise>
+							
 						</choose>
+						
 					</otherwise>
+					
 				</choose>
+				
 			</if>
+	
 	
 	=================================================================================
 	
+	
 	var paramData = { searchWord : '' };
+	
 	$.ajax({
+	
 	        type : 'POST',
+		
 	        url : '/search',
+		
 	        dataType : 'json',
+		
 	        data : paramData,
+		
 	        cache : false,
+		
 	        success : function (data) {
+		
 	        },
-	        error : function(request, status, error) { console.log("* code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); }
+		
+	        error : function(request, status, error) { console.log("* 
+		
+		code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
+		
+		}
+		
+		
 	    });
+	    
 	}
+	
 	
 	=================================================================================
 	
