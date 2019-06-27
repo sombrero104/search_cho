@@ -28,30 +28,51 @@
 	
 	
 	// search cho
+	
 	SearchWordUtil searchWordUtil = new SearchWordUtil();
+	
 	boolean isCho = searchWordUtil.isCho(searchName);
+	
 	paramMap.put("isCho", isCho); // cho true/false
+	
 	if(isCho) {
+	
 		char choSyllable = searchWordUtil.getSyllable(searchName); // 첫번째 음절
+		
 		paramMap.put("choSyllable", choSyllable);
+		
 		if(choSyllable != '하') {
+		
 			char choNextSyllable = searchWordUtil.getNextSyllable(searchName); // 해당 음절 다음 음절
+			
 			paramMap.put("choNextSyllable", choNextSyllable);
+			
 		}
+		
 	} else {
+	
 		boolean isOneWord = (searchName.length() > 1) ? false : true;
+		
 		paramMap.put("isOneWord", isOneWord);
+		
 	}
+	
 	paramMap.put("searchName", searchName);
+	
 	
 	=================================================================================
 	
+	
 	package com.inca.common.util;
+	
 
 	import java.util.Arrays;
 
+
 	public class SearchWordUtil {
+	
 		char[] choArray = { 'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ' };
+		
 		
 		/**
 		 * 한글 초성 여부
@@ -95,7 +116,24 @@
 			}
 			return (char)(0xAC00 + 21*28*nextSyllableIndex + 28*0 + 0);
 		}
-		
+	
+		 /**
+		 * 초성 반환
+		 * @param String word
+		 * @return char
+		 */
+		public char getCho(String word) {
+			char firstWord = word.charAt(0);
+			if(firstWord >= 0xAC00) { // 0xAC00 => 한글 시작점 '가'
+				int uniVal = firstWord - 0xAC00;
+				int cho = ((uniVal - (uniVal % 28)) / 28) / 21;
+				return choArray[cho];
+			} else {
+				System.out.println("# It is not syllable.");
+			}
+			return 0;
+		}
+
 	}
 
 	=================================================================================
